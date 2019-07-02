@@ -193,8 +193,8 @@ export default function createGridComponent({
 |}) {
   return class Grid<T> extends PureComponent<Props<T>, State> {
     _instanceProps: any = initInstanceProps(this.props, this);
-    _resetIsScrollingTimeoutId: TimeoutID | null = null;
     _outerRef: ?HTMLDivElement;
+    _resetIsScrollingTimeoutId: TimeoutID | null = null;
 
     static defaultProps = {
       direction: 'ltr',
