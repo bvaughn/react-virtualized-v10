@@ -122,8 +122,17 @@ const getEstimatedTotalSize = (
     lastMeasuredIndex,
     totalMeasuredSize,
   }: InstanceProps
-) =>
-  totalMeasuredSize + (itemCount - lastMeasuredIndex - 1) * estimatedItemSize;
+) => {
+  const simpleEstimatedTotalSize = itemCount * estimatedItemSize;
+  const newEstimatedTotalSize =
+    totalMeasuredSize + (itemCount - lastMeasuredIndex - 1) * estimatedItemSize;
+
+  if (newEstimatedTotalSize < 0) {
+    return simpleEstimatedTotalSize;
+  } else {
+    return newEstimatedTotalSize;
+  }
+};
 
 const DynamicSizeList = createListComponent({
   getItemOffset: (
