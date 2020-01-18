@@ -18,6 +18,7 @@ import RTLLayoutExample from './routes/examples/RTLLayout';
 import ListWithScrollingIndicatorExample from './routes/examples/ListWithScrollingIndicator';
 import ScrollToItemExample from './routes/examples/ScrollToItem';
 import MemoizedListItemsExample from './routes/examples/MemoizedListItemsExample';
+import SimpleListExample from './routes/examples/SimpleList';
 
 import styles from './App.module.css';
 
@@ -61,6 +62,13 @@ export default function App() {
 }
 
 const EXAMPLE_ROUTES = [
+  {
+    path: '/examples/simple-list',
+    title: 'SimpleList',
+    component: SimpleListExample,
+  },
+
+  // v1 API
   {
     path: '/examples/list/fixed-size',
     title: 'Fixed Size List',

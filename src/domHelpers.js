@@ -70,3 +70,17 @@ export function getRTLOffsetType(recalculate?: boolean = false): RTLOffsetType {
 
   return cachedRTLResult;
 }
+
+let cachedDisplayLockingSupport: boolean | null = null;
+
+// Detects browser support Display Locking API:
+// https://github.com/WICG/display-locking
+export function detectDisplayLockingSupport(): boolean {
+  if (typeof cachedDisplayLockingSupport === null) {
+    const div = document.createElement('div');
+
+    cachedDisplayLockingSupport = typeof div.updateRendering === 'function';
+  }
+
+  return ((cachedDisplayLockingSupport: any): boolean);
+}

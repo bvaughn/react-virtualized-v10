@@ -1,0 +1,270 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleList changing itemSize updates the rendered items 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    0,
+    2,
+  ],
+]
+`;
+
+exports[`SimpleList onScroll scrolling should report partial items correctly in onItemsDisplayed 1`] = `
+Array [
+  Array [
+    0,
+    5,
+  ],
+  Array [
+    1,
+    7,
+  ],
+  Array [
+    2,
+    7,
+  ],
+  Array [
+    1,
+    7,
+  ],
+  Array [
+    94,
+    99,
+  ],
+  Array [
+    95,
+    99,
+  ],
+  Array [
+    94,
+    99,
+  ],
+]
+`;
+
+exports[`SimpleList overscanCount should not scan past the beginning of the list 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+]
+`;
+
+exports[`SimpleList overscanCount should not scan past the end of the list 1`] = `
+Array [
+  Array [
+    5,
+    9,
+  ],
+]
+`;
+
+exports[`SimpleList overscanCount should over-render one item in both directions for keyboard accessibility / tabbing 1`] = `
+Array [
+  Array [
+    1,
+    7,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method scroll with align = "auto" should work with partially-visible items 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    6,
+    11,
+  ],
+  Array [
+    95,
+    99,
+  ],
+  Array [
+    0,
+    5,
+  ],
+  Array [
+    0,
+    4,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method scroll with align = "auto" should work with very small lists and partial items 1`] = `
+Array [
+  Array [
+    0,
+    1,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should ignore indexes greater than itemCount 1`] = `
+Array [
+  Array [
+    95,
+    99,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should ignore indexes less than zero 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should not set invalid offsets when the list contains few items 1`] = `[Function]`;
+
+exports[`SimpleList scrollToItem method should scroll to the correct item for align = "auto" 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    6,
+    11,
+  ],
+  Array [
+    1,
+    6,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should scroll to the correct item for align = "center" 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    7,
+    13,
+  ],
+  Array [
+    6,
+    12,
+  ],
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    95,
+    99,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should scroll to the correct item for align = "end" 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    6,
+    11,
+  ],
+  Array [
+    5,
+    10,
+  ],
+  Array [
+    0,
+    4,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should scroll to the correct item for align = "smart" 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    7,
+    13,
+  ],
+  Array [
+    5,
+    10,
+  ],
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    95,
+    99,
+  ],
+  Array [
+    94,
+    99,
+  ],
+  Array [
+    95,
+    99,
+  ],
+  Array [
+    93,
+    98,
+  ],
+  Array [
+    95,
+    99,
+  ],
+  Array [
+    87,
+    93,
+  ],
+  Array [
+    95,
+    99,
+  ],
+]
+`;
+
+exports[`SimpleList scrollToItem method should scroll to the correct item for align = "start" 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    9,
+    14,
+  ],
+  Array [
+    8,
+    13,
+  ],
+  Array [
+    95,
+    99,
+  ],
+]
+`;
+
+exports[`SimpleList should render a list of rows 1`] = `
+Array [
+  Array [
+    0,
+    4,
+  ],
+]
+`;
