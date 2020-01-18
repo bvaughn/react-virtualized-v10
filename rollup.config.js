@@ -19,6 +19,7 @@ const babelConfigEsModules = babel({
 
 const umdGlobals = {
   react: 'React',
+  'react-dom': 'ReactDOM',
 };
 
 export default [

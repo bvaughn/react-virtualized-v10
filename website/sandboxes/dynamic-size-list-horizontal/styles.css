@@ -1,0 +1,22 @@
+html {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+.List {
+  border: 1px solid #d9dddd;
+}
+
+.ListItemEven,
+.ListItemOdd {
+  display: flex;
+  align-items: center;
+  white-space: pre;
+  word-wrap: nowrap;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.ListItemEven {
+  background-color: #f8f8f0;
+}

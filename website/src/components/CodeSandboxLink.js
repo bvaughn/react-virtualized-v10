@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React from 'react';
 
 import styles from './CodeSandboxLink.module.css';
@@ -9,7 +10,7 @@ const CodeSandboxLink = ({ className, tree = 'master', sandbox }) => {
 
   return (
     <a
-      className={`${styles.CodeSandboxLink} ${className || ''}`}
+      className={cn(styles.CodeSandboxLink, className)}
       href={`https://codesandbox.io/s/github/bvaughn/react-window/tree/${tree}/website/sandboxes/${sandbox}`}
       rel="nofollow"
       target="_blank"

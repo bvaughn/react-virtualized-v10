@@ -37,6 +37,8 @@
 }
 
 .ComponentApiPropType {
+  display: flex;
+  align-items: center;
   line-height: 2rem;
 }
 
@@ -48,4 +50,11 @@
 .ComponentApiPropDefinition {
   margin-left: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.WarningIcon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  fill: #ff5370;
 }

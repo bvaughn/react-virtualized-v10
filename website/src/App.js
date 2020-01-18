@@ -5,19 +5,21 @@ import { SubMenu } from './components/SubMenu';
 
 // Routes
 import areEqualApi from './routes/api/areEqual';
+import DynamicSizeListExample from './routes/examples/DynamicSizeList';
+import DynamicSizeListApi from './routes/api/DynamicSizeList';
+import FixedSizeGridApi from './routes/api/FixedSizeGrid';
+import FixedSizeGridExample from './routes/examples/FixedSizeGrid';
+import FixedSizeListApi from './routes/api/FixedSizeList';
+import FixedSizeListExample from './routes/examples/FixedSizeList';
+import RTLLayoutExample from './routes/examples/RTLLayout';
+import ListWithScrollingIndicatorExample from './routes/examples/ListWithScrollingIndicator';
+import MemoizedListItemsExample from './routes/examples/MemoizedListItemsExample';
+import ScrollToItemExample from './routes/examples/ScrollToItem';
 import shouldComponentUpdateApi from './routes/api/shouldComponentUpdate';
 import VariableSizeGridApi from './routes/api/VariableSizeGrid';
 import VariableSizeGridExample from './routes/examples/VariableSizeGrid';
 import VariableSizeListApi from './routes/api/VariableSizeList';
 import VariableSizeListExample from './routes/examples/VariableSizeList';
-import FixedSizeGridApi from './routes/api/FixedSizeGrid';
-import FixedSizeListApi from './routes/api/FixedSizeList';
-import FixedSizeGridExample from './routes/examples/FixedSizeGrid';
-import FixedSizeListExample from './routes/examples/FixedSizeList';
-import RTLLayoutExample from './routes/examples/RTLLayout';
-import ListWithScrollingIndicatorExample from './routes/examples/ListWithScrollingIndicator';
-import ScrollToItemExample from './routes/examples/ScrollToItem';
-import MemoizedListItemsExample from './routes/examples/MemoizedListItemsExample';
 
 import styles from './App.module.css';
 
@@ -72,6 +74,11 @@ const EXAMPLE_ROUTES = [
     component: VariableSizeListExample,
   },
   {
+    path: '/examples/list/dynamic-size',
+    title: 'Dynamic Size List',
+    component: DynamicSizeListExample,
+  },
+  {
     path: '/examples/grid/fixed-size',
     title: 'Fixed Size Grid',
     component: FixedSizeGridExample,
@@ -113,6 +120,11 @@ const COMPONENTS_ROUTES = [
     path: '/api/VariableSizeList',
     title: 'VariableSizeList',
     component: VariableSizeListApi,
+  },
+  {
+    path: '/api/DynamicSizeList',
+    title: 'DynamicSizeList',
+    component: DynamicSizeListApi,
   },
   {
     path: '/api/FixedSizeGrid',

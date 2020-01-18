@@ -41,6 +41,31 @@
   overflow: hidden;
 }
 
+.Note {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1.15rem;
+  margin: 0 2rem 2rem 0;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 0.5rem 1.5rem;
+  color: #fff;
+  background-color: #ff5370;
+}
+
+.NoteIcon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  fill: currentColor;
+}
+
+.NoteLink {
+  font-family: monospace;
+  color: inherit;
+  text-decoration: none;
+}
+
 .TryItOutLink {
   margin-top: 1rem;
 }
@@ -69,9 +94,54 @@
   justify-content: center;
 }
 
+.DynamicColumnEven,
+.DynamicColumnOdd,
+.DynamicRowEven,
+.DynamicRowOdd {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  display: flex;
+}
+.DynamicColumnEven,
+.DynamicColumnOdd {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.DynamicColumnEven,
+.DynamicRowEven,
 .GridItemEven,
 .ListItemEven {
   background-color: #f8f8f0;
+}
+
+.ListColumn {
+  white-space: pre;
+  word-wrap: nowrap;
+  align-items: center;
+}
+
+.DynamicColumnAvatar,
+.DynamicRowAvatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  flex: 0 0 auto;
+  line-height: 2.5rem;
+  text-align: center;
+}
+
+.DynamicColumnText,
+.DynamicRowText {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.DynamicColumnText {
+  white-space: nowrap;
 }
 
 @media (max-width: 37.5rem) {
@@ -97,5 +167,13 @@
 
   .ExampleCode {
     padding: 1rem;
+  }
+
+  .Note {
+    border-top: 2rem solid #fff;
+    display: flex;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

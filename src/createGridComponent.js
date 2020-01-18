@@ -756,6 +756,7 @@ export default function createGridComponent({
         // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
         let calculatedScrollLeft = scrollLeft;
         if (direction === 'rtl') {
+          // eslint-disable-next-line default-case
           switch (getRTLOffsetType()) {
             case 'negative':
               calculatedScrollLeft = -scrollLeft;

@@ -10,6 +10,7 @@ import styles from './ProfiledExample.module.css';
 type Props = {|
   className?: string,
   sandbox?: string,
+  style?: Object,
 |};
 
 const isProfilingEnabled = window.location.hash.indexOf('profile=true') >= 0;
@@ -21,11 +22,11 @@ export default class ProfiledExample extends PureComponent<Props, void> {
   _totalActualTime = 0;
 
   render() {
-    const { className, children, sandbox } = this.props;
+    const { className, children, sandbox, style } = this.props;
 
     if (isProfilingEnabled) {
       return (
-        <div className={className}>
+        <div className={className} style={style}>
           <Profiler id={sandbox || 'Profiler'} onRender={this._onRender}>
             {children}
           </Profiler>
@@ -46,7 +47,7 @@ export default class ProfiledExample extends PureComponent<Props, void> {
       );
     } else {
       return (
-        <div className={className}>
+        <div className={className} style={style}>
           {children}
           <div className={styles.Row}>
             <CodeSandboxLink sandbox={sandbox} />

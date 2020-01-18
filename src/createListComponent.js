@@ -11,10 +11,10 @@ export type ScrollToAlign = 'auto' | 'smart' | 'center' | 'start' | 'end';
 
 type itemSize = number | ((index: number) => number);
 // TODO Deprecate directions "horizontal" and "vertical"
-type Direction = 'ltr' | 'rtl' | 'horizontal' | 'vertical';
-type Layout = 'horizontal' | 'vertical';
+export type Direction = 'ltr' | 'rtl' | 'horizontal' | 'vertical';
+export type Layout = 'horizontal' | 'vertical';
 
-type RenderComponentProps<T> = {|
+export type RenderComponentProps<T> = {|
   data: T,
   index: number,
   isScrolling?: boolean,
@@ -97,7 +97,7 @@ type GetItemSize = (
   props: Props<any>,
   index: number,
   instanceProps: any
-) => number;
+) => ?number;
 type GetEstimatedTotalSize = (props: Props<any>, instanceProps: any) => number;
 type GetOffsetForIndexAndAlignment = (
   props: Props<any>,
@@ -122,7 +122,7 @@ type ValidateProps = (props: Props<any>) => void;
 
 const IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
 
-const defaultItemKey = (index: number, data: any) => index;
+export const defaultItemKey = (index: number, data: any) => index;
 
 // In DEV mode, this Set helps us only log a warning once per component instance.
 // This avoids spamming the console every time a render happens.
@@ -243,6 +243,7 @@ export default function createListComponent({
       }
 
       this._callPropsCallbacks();
+      this._commitHook();
     }
 
     componentDidUpdate() {
@@ -279,31 +280,29 @@ export default function createListComponent({
       }
 
       this._callPropsCallbacks();
+      this._commitHook();
     }
 
     componentWillUnmount() {
       if (this._resetIsScrollingTimeoutId !== null) {
         cancelTimeout(this._resetIsScrollingTimeoutId);
       }
+
+      this._unmountHook();
     }
 
     render() {
       const {
-        children,
         className,
         direction,
         height,
         innerRef,
         innerElementType,
         innerTagName,
-        itemCount,
-        itemData,
-        itemKey = defaultItemKey,
         layout,
         outerElementType,
         outerTagName,
         style,
-        useIsScrolling,
         width,
       } = this.props;
       const { isScrolling } = this.state;
@@ -316,22 +315,7 @@ export default function createListComponent({
         ? this._onScrollHorizontal
         : this._onScrollVertical;
 
-      const [startIndex, stopIndex] = this._getRangeToRender();
-
-      const items = [];
-      if (itemCount > 0) {
-        for (let index = startIndex; index <= stopIndex; index++) {
-          items.push(
-            createElement(children, {
-              data: itemData,
-              key: itemKey(index, itemData),
-              index,
-              isScrolling: useIsScrolling ? isScrolling : undefined,
-              style: this._getItemStyle(index),
-            })
-          );
-        }
-      }
+      const items = this._renderItems();
 
       // Read this value AFTER items have been created,
       // So their actual sizes (if variable) are taken into consideration.
@@ -347,10 +331,10 @@ export default function createListComponent({
           onScroll,
           ref: this._outerRefSetter,
           style: {
-            position: 'relative',
             height,
             width,
             overflow: 'auto',
+            position: 'relative',
             WebkitOverflowScrolling: 'touch',
             willChange: 'transform',
             direction,
@@ -441,6 +425,14 @@ export default function createListComponent({
       }
     }
 
+    // This method is called after mount and update.
+    // List implementations can override this method to be notified.
+    _commitHook() {}
+
+    // This method is called before unmounting.
+    // List implementations can override this method to be notified.
+    _unmountHook() {}
+
     // Lazily create and cache item styles while scrolling,
     // So that pure component sCU will prevent re-renders.
     // We maintain this cache, and pass a style prop rather than index,
@@ -481,8 +473,17 @@ export default function createListComponent({
       return style;
     };
 
+    _itemStyleCache: ItemStyleCache;
+
+    // TODO This memoized getter doesn't make much sense.
+    // If all that's really needed is for the impl to be able to reset the cache,
+    // Then we could expose a better API for that.
     _getItemStyleCache: (_: any, __: any, ___: any) => ItemStyleCache;
-    _getItemStyleCache = memoizeOne((_: any, __: any, ___: any) => ({}));
+    _getItemStyleCache = memoizeOne((_: any, __: any, ___: any) => {
+      this._itemStyleCache = {};
+
+      return this._itemStyleCache;
+    });
 
     _getRangeToRender(): [number, number, number, number] {
       const { itemCount, overscanCount } = this.props;
@@ -523,6 +524,35 @@ export default function createListComponent({
       ];
     }
 
+    _renderItems() {
+      const {
+        children,
+        itemCount,
+        itemData,
+        itemKey = defaultItemKey,
+        useIsScrolling,
+      } = this.props;
+      const { isScrolling } = this.state;
+
+      const [startIndex, stopIndex] = this._getRangeToRender();
+
+      const items = [];
+      if (itemCount > 0) {
+        for (let index = startIndex; index <= stopIndex; index++) {
+          items.push(
+            createElement(children, {
+              data: itemData,
+              key: itemKey(index, itemData),
+              index,
+              isScrolling: useIsScrolling ? isScrolling : undefined,
+              style: this._getItemStyle(index),
+            })
+          );
+        }
+      }
+      return items;
+    }
+
     _onScrollHorizontal = (event: ScrollEvent): void => {
       const { clientWidth, scrollLeft, scrollWidth } = event.currentTarget;
       this.setState(prevState => {
@@ -541,6 +571,7 @@ export default function createListComponent({
           // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
           // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
           // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
+          // eslint-disable-next-line default-case
           switch (getRTLOffsetType()) {
             case 'negative':
               scrollOffset = -scrollLeft;
@@ -629,6 +660,10 @@ export default function createListComponent({
         this._getItemStyleCache(-1, null);
       });
     };
+
+    // Intentionally placed after all other instance properties have been initialized,
+    // So that DynamicSizeList can override the render behavior.
+    _instanceProps: any = initInstanceProps(this.props, this);
   };
 }
 

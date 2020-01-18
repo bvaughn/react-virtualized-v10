@@ -71,6 +71,11 @@ export default class ComponentApi extends Component<Props, State> {
             {props.filter(prop => showAll || prop.isRequired).map(prop => (
               <Fragment key={prop.name}>
                 <dt className={styles.ComponentApiPropType}>
+                  {prop.showWarning ? (
+                    <svg className={styles.WarningIcon} viewBox="0 0 24 24">
+                      <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                    </svg>
+                  ) : null}
                   {prop.name}: {prop.type}{' '}
                   {prop.defaultValue !== undefined
                     ? ` = ${prop.defaultValue}`
@@ -90,6 +95,11 @@ export default class ComponentApi extends Component<Props, State> {
             {methods.map(method => (
               <Fragment key={method.signature}>
                 <dt className={styles.ComponentApiPropType}>
+                  {method.showWarning ? (
+                    <svg className={styles.WarningIcon} viewBox="0 0 24 24">
+                      <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                    </svg>
+                  ) : null}
                   {method.signature}
                 </dt>
                 <dd className={styles.ComponentApiPropDefinition}>
