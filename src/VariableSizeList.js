@@ -8,6 +8,7 @@ const DEFAULT_ESTIMATED_ITEM_SIZE = 50;
 
 type VariableSizeProps = {|
   estimatedItemSize: number,
+  getEstimatedRemainingHeight: (index: number) => number,
   ...Props<any>,
 |};
 
@@ -20,6 +21,7 @@ type ItemMetadata = {|
 type InstanceProps = {|
   itemMetadataMap: { [index: number]: ItemMetadata },
   estimatedItemSize: number,
+  getEstimatedRemainingHeight: (index: number) => number,
   lastMeasuredIndex: number,
 |};
 
@@ -142,7 +144,12 @@ const findNearestItemExponentialSearch = (
 
 const getEstimatedTotalSize = (
   { itemCount }: Props<any>,
-  { itemMetadataMap, estimatedItemSize, lastMeasuredIndex }: InstanceProps
+  {
+    itemMetadataMap,
+    estimatedItemSize,
+    getEstimatedRemainingHeight,
+    lastMeasuredIndex,
+  }: InstanceProps
 ) => {
   let totalSizeOfMeasuredItems = 0;
 
@@ -155,6 +162,13 @@ const getEstimatedTotalSize = (
   if (lastMeasuredIndex >= 0) {
     const itemMetadata = itemMetadataMap[lastMeasuredIndex];
     totalSizeOfMeasuredItems = itemMetadata.offset + itemMetadata.size;
+  }
+
+  if (getEstimatedRemainingHeight != null) {
+    return (
+      totalSizeOfMeasuredItems +
+      getEstimatedRemainingHeight(lastMeasuredIndex + 1)
+    );
   }
 
   const numUnmeasuredItems = itemCount - lastMeasuredIndex - 1;
@@ -267,11 +281,15 @@ const VariableSizeList = createListComponent({
   },
 
   initInstanceProps(props: Props<any>, instance: any): InstanceProps {
-    const { estimatedItemSize } = ((props: any): VariableSizeProps);
+    const {
+      estimatedItemSize,
+      getEstimatedRemainingHeight,
+    } = ((props: any): VariableSizeProps);
 
     const instanceProps = {
       itemMetadataMap: {},
       estimatedItemSize: estimatedItemSize || DEFAULT_ESTIMATED_ITEM_SIZE,
+      getEstimatedRemainingHeight: getEstimatedRemainingHeight || null,
       lastMeasuredIndex: -1,
     };
 

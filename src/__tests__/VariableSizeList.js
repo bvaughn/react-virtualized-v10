@@ -119,7 +119,7 @@ describe('VariableSizeList', () => {
       expect(scrollContainer.props.style.height).toEqual(4875);
     });
 
-    it('should udpate the scrollable size as more items are measured', () => {
+    it('should update the scrollable size as more items are measured', () => {
       const itemSize = jest.fn(() => 25);
       const rendered = ReactTestRenderer.create(
         <VariableSizeList
@@ -138,6 +138,62 @@ describe('VariableSizeList', () => {
       expect(itemSize).toHaveBeenCalledTimes(20);
       const scrollContainer = findScrollContainer(rendered);
       expect(scrollContainer.props.style.height).toEqual(4500);
+    });
+  });
+
+  describe('getEstimatedRemainingHeight', () => {
+    const itemSizes = Array.from({ length: 100 }, (v, i) => 25 + i);
+
+    it('should calculate an initial estimable scrollable size', () => {
+      const itemSize = jest.fn(i => itemSizes[i]);
+      const getEstimate = jest.fn(i => 75 * (100 - i));
+
+      const rendered = ReactTestRenderer.create(
+        <VariableSizeList
+          {...defaultProps}
+          getEstimatedRemainingHeight={getEstimate}
+          height={100}
+          itemCount={100}
+          itemSize={itemSize}
+          overscanCount={0}
+        />
+      );
+
+      // We'll render 5 rows initially (135px total).
+      // The remaining 95 rows are calculated to be at total of 7,315px.
+      // This means an initial height estimate of 7,450px.
+      expect(itemSize).toHaveBeenCalledTimes(5);
+      expect(getEstimate).toHaveBeenCalledTimes(1);
+      expect(getEstimate).toHaveBeenCalledWith(5);
+
+      const scrollContainer = findScrollContainer(rendered);
+      expect(scrollContainer.props.style.height).toEqual(7260);
+    });
+
+    it('should update the scrollable size as more items are measured', () => {
+      const itemSize = jest.fn(i => itemSizes[i]);
+      const getEstimate = jest.fn(i => 75 * (100 - i));
+
+      const rendered = ReactTestRenderer.create(
+        <VariableSizeList
+          {...defaultProps}
+          getEstimatedRemainingHeight={getEstimate}
+          height={100}
+          itemCount={100}
+          itemSize={itemSize}
+          overscanCount={0}
+        />
+      );
+      rendered.getInstance().scrollToItem(18);
+      // Including the additional 1 (minimum) overscan row,
+      // We've now measured 20 rows (690px total).
+      // The remaining 80 rows will be estimated at 75px tall (6000px total).
+      // This means an updated height estimate of 6,690px.
+      expect(itemSize).toHaveBeenCalledTimes(20);
+      // Called twice for both renders, once for scrollToItem.
+      expect(getEstimate).toHaveBeenCalledTimes(3);
+      const scrollContainer = findScrollContainer(rendered);
+      expect(scrollContainer.props.style.height).toEqual(6690);
     });
   });
 
