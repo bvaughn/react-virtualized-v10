@@ -148,6 +148,19 @@ const PROPS = [
     type: 'string',
   },
   {
+    defaultValue: 150,
+    description: (
+      <p>
+        The interval in ms since the last scroll event after which the
+        <code>isScrolling</code> prop passed to <code>children</code> will
+        switch back to <code>false</code>. Has no effect if the
+        <code>useIsScrolling</code> option is not set.
+      </p>
+    ),
+    name: 'isScrollingDebounceInterval',
+    type: 'number',
+  },
+  {
     description: (
       <p>
         Total number of items in the list. Note that only a few items will be

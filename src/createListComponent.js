@@ -64,6 +64,7 @@ export type Props<T> = {|
   innerRef?: any,
   innerElementType?: string | React$AbstractComponent<InnerProps, any>,
   innerTagName?: string, // deprecated
+  isScrollingDebounceInterval?: number,
   itemCount: number,
   itemData: T,
   itemKey?: (index: number, data: T) => any,
@@ -614,9 +615,15 @@ export default function createListComponent({
         cancelTimeout(this._resetIsScrollingTimeoutId);
       }
 
+      const debounce =
+        this.props.isScrollingDebounceInterval === null ||
+        this.props.isScrollingDebounceInterval === undefined
+          ? IS_SCROLLING_DEBOUNCE_INTERVAL
+          : this.props.isScrollingDebounceInterval;
+
       this._resetIsScrollingTimeoutId = requestTimeout(
         this._resetIsScrolling,
-        IS_SCROLLING_DEBOUNCE_INTERVAL
+        debounce
       );
     };
 

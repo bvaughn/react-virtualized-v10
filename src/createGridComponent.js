@@ -74,6 +74,7 @@ export type Props<T> = {|
   innerRef?: any,
   innerElementType?: string | React$AbstractComponent<InnerProps, any>,
   innerTagName?: string, // deprecated
+  isScrollingDebounceInterval?: number,
   itemData: T,
   itemKey?: (params: {|
     columnIndex: number,
@@ -810,9 +811,15 @@ export default function createGridComponent({
         cancelTimeout(this._resetIsScrollingTimeoutId);
       }
 
+      const debounce =
+        this.props.isScrollingDebounceInterval === null ||
+        this.props.isScrollingDebounceInterval === undefined
+          ? IS_SCROLLING_DEBOUNCE_INTERVAL
+          : this.props.isScrollingDebounceInterval;
+
       this._resetIsScrollingTimeoutId = requestTimeout(
         this._resetIsScrolling,
-        IS_SCROLLING_DEBOUNCE_INTERVAL
+        debounce
       );
     };
 
