@@ -160,6 +160,7 @@ export default function createListComponent({
     _instanceProps: any = initInstanceProps(this.props, this);
     _outerRef: ?HTMLDivElement;
     _resetIsScrollingTimeoutId: TimeoutID | null = null;
+    _window: ?any;
 
     static defaultProps = {
       direction: 'ltr',
@@ -242,6 +243,16 @@ export default function createListComponent({
         }
       }
 
+      this._window = window;
+      if (
+        this._outerRef != null &&
+        this._outerRef.parentNode &&
+        this._outerRef.parentNode.ownerDocument &&
+        this._outerRef.parentNode.ownerDocument.defaultView
+      ) {
+        this._window = this._outerRef.parentNode.ownerDocument.defaultView;
+      }
+
       this._callPropsCallbacks();
     }
 
@@ -258,7 +269,7 @@ export default function createListComponent({
             // TRICKY According to the spec, scrollLeft should be negative for RTL aligned elements.
             // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
             // So we need to determine which browser behavior we're dealing with, and mimic it.
-            switch (getRTLOffsetType()) {
+            switch (getRTLOffsetType(false, this._window)) {
               case 'negative':
                 outerRef.scrollLeft = -scrollOffset;
                 break;
@@ -283,7 +294,7 @@ export default function createListComponent({
 
     componentWillUnmount() {
       if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
+        cancelTimeout(this._resetIsScrollingTimeoutId, this._window);
       }
     }
 
@@ -541,7 +552,7 @@ export default function createListComponent({
           // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
           // It's also easier for this component if we convert offsets to the same format as they would be in for ltr.
           // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
-          switch (getRTLOffsetType()) {
+          switch (getRTLOffsetType(false, this._window)) {
             case 'negative':
               scrollOffset = -scrollLeft;
               break;
@@ -611,12 +622,13 @@ export default function createListComponent({
 
     _resetIsScrollingDebounced = () => {
       if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
+        cancelTimeout(this._resetIsScrollingTimeoutId, this._window);
       }
 
       this._resetIsScrollingTimeoutId = requestTimeout(
         this._resetIsScrolling,
-        IS_SCROLLING_DEBOUNCE_INTERVAL
+        IS_SCROLLING_DEBOUNCE_INTERVAL,
+        this._window
       );
     };
 

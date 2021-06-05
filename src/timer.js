@@ -14,23 +14,27 @@ export type TimeoutID = {|
   id: AnimationFrameID,
 |};
 
-export function cancelTimeout(timeoutID: TimeoutID) {
-  cancelAnimationFrame(timeoutID.id);
+export function cancelTimeout(timeoutID: TimeoutID, hostWindow: any) {
+  hostWindow.cancelAnimationFrame(timeoutID.id);
 }
 
-export function requestTimeout(callback: Function, delay: number): TimeoutID {
+export function requestTimeout(
+  callback: Function,
+  delay: number,
+  hostWindow: any
+): TimeoutID {
   const start = now();
 
   function tick() {
     if (now() - start >= delay) {
       callback.call(null);
     } else {
-      timeoutID.id = requestAnimationFrame(tick);
+      timeoutID.id = hostWindow.requestAnimationFrame(tick);
     }
   }
 
   const timeoutID: TimeoutID = {
-    id: requestAnimationFrame(tick),
+    id: hostWindow.requestAnimationFrame(tick),
   };
 
   return timeoutID;

@@ -195,6 +195,7 @@ export default function createGridComponent({
     _instanceProps: any = initInstanceProps(this.props, this);
     _resetIsScrollingTimeoutId: TimeoutID | null = null;
     _outerRef: ?HTMLDivElement;
+    _window: ?any;
 
     static defaultProps = {
       direction: 'ltr',
@@ -286,7 +287,7 @@ export default function createGridComponent({
     }): void {
       const { columnCount, height, rowCount, width } = this.props;
       const { scrollLeft, scrollTop } = this.state;
-      const scrollbarSize = getScrollbarSize();
+      const scrollbarSize = getScrollbarSize(false, this._window);
 
       if (columnIndex !== undefined) {
         columnIndex = Math.max(0, Math.min(columnIndex, columnCount - 1));
@@ -340,6 +341,7 @@ export default function createGridComponent({
 
     componentDidMount() {
       const { initialScrollLeft, initialScrollTop } = this.props;
+      this._window = window;
 
       if (this._outerRef != null) {
         const outerRef = ((this._outerRef: any): HTMLElement);
@@ -348,6 +350,14 @@ export default function createGridComponent({
         }
         if (typeof initialScrollTop === 'number') {
           outerRef.scrollTop = initialScrollTop;
+        }
+
+        if (
+          this._outerRef.parentNode &&
+          this._outerRef.parentNode.ownerDocument &&
+          this._outerRef.parentNode.ownerDocument.defaultView
+        ) {
+          this._window = this._outerRef.parentNode.ownerDocument.defaultView;
         }
       }
 
@@ -364,7 +374,7 @@ export default function createGridComponent({
         // So we need to determine which browser behavior we're dealing with, and mimic it.
         const outerRef = ((this._outerRef: any): HTMLElement);
         if (direction === 'rtl') {
-          switch (getRTLOffsetType()) {
+          switch (getRTLOffsetType(false, this._window)) {
             case 'negative':
               outerRef.scrollLeft = -scrollLeft;
               break;
@@ -388,7 +398,7 @@ export default function createGridComponent({
 
     componentWillUnmount() {
       if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
+        cancelTimeout(this._resetIsScrollingTimeoutId, this._window);
       }
     }
 
@@ -756,7 +766,7 @@ export default function createGridComponent({
         // So the simplest solution is to determine which browser behavior we're dealing with, and convert based on it.
         let calculatedScrollLeft = scrollLeft;
         if (direction === 'rtl') {
-          switch (getRTLOffsetType()) {
+          switch (getRTLOffsetType(false, this._window)) {
             case 'negative':
               calculatedScrollLeft = -scrollLeft;
               break;
@@ -807,12 +817,13 @@ export default function createGridComponent({
 
     _resetIsScrollingDebounced = () => {
       if (this._resetIsScrollingTimeoutId !== null) {
-        cancelTimeout(this._resetIsScrollingTimeoutId);
+        cancelTimeout(this._resetIsScrollingTimeoutId, this._window);
       }
 
       this._resetIsScrollingTimeoutId = requestTimeout(
         this._resetIsScrolling,
-        IS_SCROLLING_DEBOUNCE_INTERVAL
+        IS_SCROLLING_DEBOUNCE_INTERVAL,
+        this._window
       );
     };
 
