@@ -365,6 +365,14 @@ Array [
   ],
   Array [
     Object {
+      "overscanStartIndex": 0,
+      "overscanStopIndex": 6,
+      "visibleStartIndex": 0,
+      "visibleStopIndex": 4,
+    },
+  ],
+  Array [
+    Object {
       "overscanStartIndex": 94,
       "overscanStopIndex": 99,
       "visibleStartIndex": 96,

@@ -58,7 +58,16 @@ const FixedSizeList = createListComponent({
         const middleOffset = Math.round(
           minOffset + (maxOffset - minOffset) / 2
         );
-        if (middleOffset < Math.ceil(size / 2)) {
+        const ceilingOfSizeByTwo = Math.ceil(size / 2);
+        if (middleOffset < ceilingOfSizeByTwo) {
+          if (index * itemSize >= ceilingOfSizeByTwo) {
+            // Checks if the item's top boundary falls after or before the
+            // mid point of the size of the list.
+            // If it falls before, then centering isn't possible.
+            return (
+              index * itemSize - ceilingOfSizeByTwo + Math.ceil(itemSize / 2)
+            );
+          }
           return 0; // near the beginning
         } else if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
           return lastItemOffset; // near the end

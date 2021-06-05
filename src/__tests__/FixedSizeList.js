@@ -518,6 +518,8 @@ describe('FixedSizeList', () => {
       // Scroll up as far as possible though.
       // Overscroll direction wil change again.
       rendered.getInstance().scrollToItem(1, 'center');
+      // Item 2 is aligned in the middle.
+      rendered.getInstance().scrollToItem(2, 'center');
       // Item 99 can't align in the middle because it's too close to the end.
       // Scroll down as far as possible though.
       // Overscroll direction wil change again.
