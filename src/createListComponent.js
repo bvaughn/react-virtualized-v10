@@ -29,20 +29,20 @@ type onItemsRenderedCallback = ({
   overscanStopIndex: number,
   visibleStartIndex: number,
   visibleStopIndex: number,
-}) => void;
+}) => mixed;
 type onScrollCallback = ({
   scrollDirection: ScrollDirection,
   scrollOffset: number,
   scrollUpdateWasRequested: boolean,
-}) => void;
+}) => mixed;
 
 type ScrollEvent = SyntheticEvent<HTMLDivElement>;
 type ItemStyleCache = { [index: number]: Object };
 
 type OuterProps = {|
   children: React$Node,
-  className: string | void,
-  onScroll: ScrollEvent => void,
+  className: ?string,
+  onScroll: ScrollEvent => mixed,
   style: {
     [string]: mixed,
   },
@@ -57,25 +57,25 @@ type InnerProps = {|
 
 export type Props<T> = {|
   children: RenderComponent<T>,
-  className?: string,
+  className?: ?string,
   direction: Direction,
   height: number | string,
-  initialScrollOffset?: number,
-  innerRef?: any,
-  innerElementType?: string | React$AbstractComponent<InnerProps, any>,
-  innerTagName?: string, // deprecated
+  initialScrollOffset?: ?number,
+  innerRef?: ?any,
+  innerElementType?: ?(string | React$AbstractComponent<InnerProps, any>),
+  innerTagName?: ?string, // deprecated
   itemCount: number,
   itemData: T,
-  itemKey?: (index: number, data: T) => any,
+  itemKey?: ?(index: number, data: T) => any,
   itemSize: itemSize,
   layout: Layout,
   onItemsRendered?: onItemsRenderedCallback,
   onScroll?: onScrollCallback,
   outerRef?: any,
-  outerElementType?: string | React$AbstractComponent<OuterProps, any>,
-  outerTagName?: string, // deprecated
+  outerElementType?: ?(string | React$AbstractComponent<OuterProps, any>),
+  outerTagName?: ?string, // deprecated
   overscanCount: number,
-  style?: Object,
+  style?: ?Object,
   useIsScrolling: boolean,
   width: number | string,
 |};
@@ -298,7 +298,6 @@ export default function createListComponent({
         innerTagName,
         itemCount,
         itemData,
-        itemKey = defaultItemKey,
         layout,
         outerElementType,
         outerTagName,
@@ -306,6 +305,7 @@ export default function createListComponent({
         useIsScrolling,
         width,
       } = this.props;
+      const itemKey = this.props.itemKey || defaultItemKey;
       const { isScrolling } = this.state;
 
       // TODO Deprecate direction "horizontal"

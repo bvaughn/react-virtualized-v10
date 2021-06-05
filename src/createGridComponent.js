@@ -34,22 +34,22 @@ type OnItemsRenderedCallback = ({
   visibleColumnStopIndex: number,
   visibleRowStartIndex: number,
   visibleRowStopIndex: number,
-}) => void;
+}) => mixed;
 type OnScrollCallback = ({
   horizontalScrollDirection: ScrollDirection,
   scrollLeft: number,
   scrollTop: number,
   scrollUpdateWasRequested: boolean,
   verticalScrollDirection: ScrollDirection,
-}) => void;
+}) => mixed;
 
 type ScrollEvent = SyntheticEvent<HTMLDivElement>;
 type ItemStyleCache = { [key: string]: Object };
 
 type OuterProps = {|
   children: React$Node,
-  className: string | void,
-  onScroll: ScrollEvent => void,
+  className: ?string,
+  onScroll: ScrollEvent => mixed,
   style: {
     [string]: mixed,
   },
@@ -64,35 +64,35 @@ type InnerProps = {|
 
 export type Props<T> = {|
   children: RenderComponent<T>,
-  className?: string,
+  className?: ?string,
   columnCount: number,
   columnWidth: itemSize,
   direction: Direction,
   height: number,
-  initialScrollLeft?: number,
-  initialScrollTop?: number,
+  initialScrollLeft?: ?number,
+  initialScrollTop?: ?number,
   innerRef?: any,
-  innerElementType?: string | React$AbstractComponent<InnerProps, any>,
-  innerTagName?: string, // deprecated
+  innerElementType?: ?(string | React$AbstractComponent<InnerProps, any>),
+  innerTagName?: ?string, // deprecated
   itemData: T,
-  itemKey?: (params: {|
+  itemKey?: ?(params: {|
     columnIndex: number,
     data: T,
     rowIndex: number,
   |}) => any,
-  onItemsRendered?: OnItemsRenderedCallback,
-  onScroll?: OnScrollCallback,
+  onItemsRendered?: ?OnItemsRenderedCallback,
+  onScroll?: ?OnScrollCallback,
   outerRef?: any,
-  outerElementType?: string | React$AbstractComponent<OuterProps, any>,
-  outerTagName?: string, // deprecated
-  overscanColumnCount?: number,
-  overscanColumnsCount?: number, // deprecated
-  overscanCount?: number, // deprecated
-  overscanRowCount?: number,
-  overscanRowsCount?: number, // deprecated
+  outerElementType?: ?(string | React$AbstractComponent<OuterProps, any>),
+  outerTagName?: ?string, // deprecated
+  overscanColumnCount?: ?number,
+  overscanColumnsCount?: ?number, // deprecated
+  overscanCount?: ?number, // deprecated
+  overscanRowCount?: ?number,
+  overscanRowsCount?: ?number, // deprecated
   rowCount: number,
   rowHeight: itemSize,
-  style?: Object,
+  style?: ?Object,
   useIsScrolling: boolean,
   width: number,
 |};
@@ -403,7 +403,6 @@ export default function createGridComponent({
         innerElementType,
         innerTagName,
         itemData,
-        itemKey = defaultItemKey,
         outerElementType,
         outerTagName,
         rowCount,
@@ -411,6 +410,7 @@ export default function createGridComponent({
         useIsScrolling,
         width,
       } = this.props;
+      const itemKey = this.props.itemKey || defaultItemKey;
       const { isScrolling } = this.state;
 
       const [
