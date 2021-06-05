@@ -445,6 +445,8 @@ export default function createGridComponent({
         }
       }
 
+      items.sort((a, b) => String(a.key).localeCompare(String(b.key)));
+
       // Read this value AFTER items have been created,
       // So their actual sizes (if variable) are taken into consideration.
       const estimatedTotalHeight = getEstimatedTotalHeight(
