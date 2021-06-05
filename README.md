@@ -144,13 +144,22 @@ Yes, using the `outerElementType` prop.
 
 Here's a [Code Sandbox demo](https://codesandbox.io/s/4zqx79nww0).
 
-### Can I add padding to the top and bottom of a list?
+### Can I add a header and a footer to the list?
 
-Yes, although it requires a bit of inline styling.
+Yes, you need to wrap the element in a block with a relative position
+```js
+const innerElementType = forwardRef((props, ref) => (
+  <>
+    <div>Header</div>
+    <div style={{ position: "relative" }}>
+      <div ref={ref} {...props} />
+    </div>
+    <div>Footer</div>
+  </>
+));
+```
 
-<img width="418" alt="Screen Shot 2019-06-02 at 8 38 18 PM" src="https://user-images.githubusercontent.com/29597/58774454-65ad4480-8576-11e9-8889-07044fd41393.png">
-
-Here's a [Code Sandbox demo](https://codesandbox.io/s/react-window-list-padding-dg0pq).
+Here's a [Code Sandbox demo](https://codesandbox.io/s/react-window-list-padding-forked-d6199?file=/index.js).
 
 ### Can I add gutter or padding between items?
 
