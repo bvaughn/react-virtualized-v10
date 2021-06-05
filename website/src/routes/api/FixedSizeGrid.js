@@ -9,6 +9,7 @@ import CODE_CHILDREN_CLASS from '../../code/FixedSizeGridChildrenClass.js';
 import CODE_CHILDREN_FUNCTION from '../../code/FixedSizeGridChildrenFunction.js';
 import CODE_ITEM_DATA from '../../code/FixedSizeGridItemData.js';
 import CODE_ITEM_KEY from '../../code/FixedSizeGridItemKey.js';
+import CODE_ITEM_KEY_STABLE from '../../code/FixedSizeGridStableItemKey.js';
 import CODE_ON_ITEMS_RENDERED from '../../code/FixedSizeGridOnItemsRendered.js';
 import CODE_ON_SCROLL from '../../code/FixedSizeGridOnScroll.js';
 
@@ -194,6 +195,15 @@ const PROPS = [
         </p>
         <div className={styles.CodeBlockWrapper}>
           <CodeBlock value={CODE_ITEM_KEY} />
+        </div>
+        <p>
+          When implementing your own <code>itemKey</code> function, you can use
+          the virtualizedRowIndex and virtualizedColumnIndex to ensure the keys
+          are stable and, as such, prevent the components from re-mounting as
+          the user scrolls:
+        </p>
+        <div className={styles.CodeBlockWrapper}>
+          <CodeBlock value={CODE_ITEM_KEY_STABLE} />
         </div>
       </Fragment>
     ),

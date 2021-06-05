@@ -9,6 +9,7 @@ import CODE_CHILDREN_CLASS from '../../code/FixedSizeListChildrenClass.js';
 import CODE_CHILDREN_FUNCTION from '../../code/FixedSizeListChildrenFunction.js';
 import CODE_ITEM_DATA from '../../code/FixedSizeListItemData.js';
 import CODE_ITEM_KEY from '../../code/FixedSizeListItemKey.js';
+import CODE_ITEM_KEY_STABLE from '../../code/FixedSizeListStableItemKey.js';
 import CODE_ON_ITEMS_RENDERED from '../../code/FixedSizeListOnItemsRendered.js';
 import CODE_ON_SCROLL from '../../code/FixedSizeListOnScroll.js';
 
@@ -196,6 +197,14 @@ const PROPS = [
         </p>
         <div className={styles.CodeBlockWrapper}>
           <CodeBlock value={CODE_ITEM_KEY} />
+        </div>
+        <p>
+          If you want to re-use the DOM elements as the user scrolls, you can
+          leveradge the virtualizedIndex property passed to <code>itemKey</code>{' '}
+          to implement a stable key:
+        </p>
+        <div className={styles.CodeBlockWrapper}>
+          <CodeBlock value={CODE_ITEM_KEY_STABLE} />
         </div>
       </Fragment>
     ),

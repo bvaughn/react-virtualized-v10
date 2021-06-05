@@ -79,6 +79,8 @@ export type Props<T> = {|
     columnIndex: number,
     data: T,
     rowIndex: number,
+    virtualizedRowIndex: number,
+    virtualizedColumnIndex: number,
   |}) => any,
   onItemsRendered?: OnItemsRenderedCallback,
   onScroll?: OnScrollCallback,
@@ -436,7 +438,13 @@ export default function createGridComponent({
                 columnIndex,
                 data: itemData,
                 isScrolling: useIsScrolling ? isScrolling : undefined,
-                key: itemKey({ columnIndex, data: itemData, rowIndex }),
+                key: itemKey({
+                  columnIndex,
+                  data: itemData,
+                  rowIndex,
+                  virtualizedRowIndex: rowIndex - rowStartIndex,
+                  virtualizedColumnIndex: columnIndex - columnStartIndex,
+                }),
                 rowIndex,
                 style: this._getItemStyle(rowIndex, columnIndex),
               })

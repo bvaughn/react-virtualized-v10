@@ -21,6 +21,96 @@ Array [
 ]
 `;
 
+exports[`FixedSizeList itemKey should receive the item index relative to the current rendered items as virtualizedIndex 1`] = `
+Array [
+  Array [
+    0,
+    undefined,
+    0,
+  ],
+  Array [
+    1,
+    undefined,
+    1,
+  ],
+  Array [
+    2,
+    undefined,
+    2,
+  ],
+  Array [
+    3,
+    undefined,
+    3,
+  ],
+  Array [
+    4,
+    undefined,
+    4,
+  ],
+  Array [
+    5,
+    undefined,
+    5,
+  ],
+  Array [
+    6,
+    undefined,
+    6,
+  ],
+]
+`;
+
+exports[`FixedSizeList itemKey should receive the item index relative to the current rendered items as virtualizedIndex 2`] = `
+Array [
+  Array [
+    4,
+    undefined,
+    0,
+  ],
+  Array [
+    5,
+    undefined,
+    1,
+  ],
+  Array [
+    6,
+    undefined,
+    2,
+  ],
+  Array [
+    7,
+    undefined,
+    3,
+  ],
+  Array [
+    8,
+    undefined,
+    4,
+  ],
+  Array [
+    9,
+    undefined,
+    5,
+  ],
+  Array [
+    10,
+    undefined,
+    6,
+  ],
+  Array [
+    11,
+    undefined,
+    7,
+  ],
+  Array [
+    12,
+    undefined,
+    8,
+  ],
+]
+`;
+
 exports[`FixedSizeList onScroll scrolling should report partial items correctly in onItemsRendered 1`] = `
 Array [
   Array [

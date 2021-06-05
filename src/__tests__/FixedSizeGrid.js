@@ -1049,12 +1049,42 @@ describe('FixedSizeGrid', () => {
         />
       );
       expect(itemKey).toHaveBeenCalledTimes(6);
-      expect(itemKey.mock.calls[0][0]).toEqual({ columnIndex: 0, rowIndex: 0 });
-      expect(itemKey.mock.calls[1][0]).toEqual({ columnIndex: 1, rowIndex: 0 });
-      expect(itemKey.mock.calls[2][0]).toEqual({ columnIndex: 2, rowIndex: 0 });
-      expect(itemKey.mock.calls[3][0]).toEqual({ columnIndex: 0, rowIndex: 1 });
-      expect(itemKey.mock.calls[4][0]).toEqual({ columnIndex: 1, rowIndex: 1 });
-      expect(itemKey.mock.calls[5][0]).toEqual({ columnIndex: 2, rowIndex: 1 });
+      expect(itemKey.mock.calls[0][0]).toEqual({
+        columnIndex: 0,
+        rowIndex: 0,
+        virtualizedRowIndex: 0,
+        virtualizedColumnIndex: 0,
+      });
+      expect(itemKey.mock.calls[1][0]).toEqual({
+        columnIndex: 1,
+        rowIndex: 0,
+        virtualizedRowIndex: 0,
+        virtualizedColumnIndex: 1,
+      });
+      expect(itemKey.mock.calls[2][0]).toEqual({
+        columnIndex: 2,
+        rowIndex: 0,
+        virtualizedRowIndex: 0,
+        virtualizedColumnIndex: 2,
+      });
+      expect(itemKey.mock.calls[3][0]).toEqual({
+        columnIndex: 0,
+        rowIndex: 1,
+        virtualizedRowIndex: 1,
+        virtualizedColumnIndex: 0,
+      });
+      expect(itemKey.mock.calls[4][0]).toEqual({
+        columnIndex: 1,
+        rowIndex: 1,
+        virtualizedRowIndex: 1,
+        virtualizedColumnIndex: 1,
+      });
+      expect(itemKey.mock.calls[5][0]).toEqual({
+        columnIndex: 2,
+        rowIndex: 1,
+        virtualizedRowIndex: 1,
+        virtualizedColumnIndex: 2,
+      });
     });
 
     it('should allow items to be moved within the collection without causing caching problems', () => {
@@ -1122,6 +1152,33 @@ describe('FixedSizeGrid', () => {
       expect(
         itemKey.mock.calls.filter(([params]) => params.data === itemData)
       ).toHaveLength(itemKey.mock.calls.length);
+    });
+
+    it('should receive the correct virtualized row and column indexes when scrolled', () => {
+      getScrollbarSize.mockImplementation(() => 20);
+      const itemKey = jest.fn(
+        ({ columnIndex, rowIndex }) => `${rowIndex}-${columnIndex}`
+      );
+
+      const rendered = ReactTestRenderer.create(
+        <FixedSizeGrid
+          {...defaultProps}
+          width={100}
+          height={25}
+          itemKey={itemKey}
+        />
+      );
+      onItemsRendered.mockClear();
+
+      expect(itemKey).toHaveBeenCalledTimes(4);
+      itemKey.mockClear();
+      // Scroll across to the last row in the list.
+      rendered
+        .getInstance()
+        .scrollToItem({ columnIndex: 19, rowIndex: 19, align: 'auto' });
+
+      expect(itemKey).toHaveBeenCalledTimes(16);
+      expect(itemKey.mock.calls).toMatchSnapshot();
     });
   });
 

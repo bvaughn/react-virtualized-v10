@@ -714,6 +714,25 @@ describe('FixedSizeList', () => {
         itemKey.mock.calls.filter(([index, data]) => data === itemData)
       ).toHaveLength(itemKey.mock.calls.length);
     });
+
+    it('should receive the item index relative to the current rendered items as virtualizedIndex', () => {
+      const itemKey = jest.fn(index => index);
+
+      const rendered = ReactTestRenderer.create(
+        // Create list where items don't fit exactly into container.
+        // The container has space for 3 1/3 items.
+        <FixedSizeList {...defaultProps} itemSize={20} itemKey={itemKey} />
+      );
+
+      expect(itemKey).toHaveBeenCalledTimes(7);
+      expect(itemKey.mock.calls).toMatchSnapshot();
+      itemKey.mockClear();
+
+      rendered.getInstance().scrollToItem(10, 'auto');
+
+      expect(itemKey).toHaveBeenCalledTimes(9);
+      expect(itemKey.mock.calls).toMatchSnapshot();
+    });
   });
 
   describe('refs', () => {

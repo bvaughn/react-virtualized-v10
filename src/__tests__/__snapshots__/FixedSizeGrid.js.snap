@@ -29,6 +29,155 @@ Array [
 ]
 `;
 
+exports[`FixedSizeGrid itemKey should receive the correct virtualized row and column indexes when scrolled 1`] = `
+Array [
+  Array [
+    Object {
+      "columnIndex": 18,
+      "data": undefined,
+      "rowIndex": 18,
+      "virtualizedColumnIndex": 0,
+      "virtualizedRowIndex": 0,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 19,
+      "data": undefined,
+      "rowIndex": 18,
+      "virtualizedColumnIndex": 1,
+      "virtualizedRowIndex": 0,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 20,
+      "data": undefined,
+      "rowIndex": 18,
+      "virtualizedColumnIndex": 2,
+      "virtualizedRowIndex": 0,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 21,
+      "data": undefined,
+      "rowIndex": 18,
+      "virtualizedColumnIndex": 3,
+      "virtualizedRowIndex": 0,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 18,
+      "data": undefined,
+      "rowIndex": 19,
+      "virtualizedColumnIndex": 0,
+      "virtualizedRowIndex": 1,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 19,
+      "data": undefined,
+      "rowIndex": 19,
+      "virtualizedColumnIndex": 1,
+      "virtualizedRowIndex": 1,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 20,
+      "data": undefined,
+      "rowIndex": 19,
+      "virtualizedColumnIndex": 2,
+      "virtualizedRowIndex": 1,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 21,
+      "data": undefined,
+      "rowIndex": 19,
+      "virtualizedColumnIndex": 3,
+      "virtualizedRowIndex": 1,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 18,
+      "data": undefined,
+      "rowIndex": 20,
+      "virtualizedColumnIndex": 0,
+      "virtualizedRowIndex": 2,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 19,
+      "data": undefined,
+      "rowIndex": 20,
+      "virtualizedColumnIndex": 1,
+      "virtualizedRowIndex": 2,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 20,
+      "data": undefined,
+      "rowIndex": 20,
+      "virtualizedColumnIndex": 2,
+      "virtualizedRowIndex": 2,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 21,
+      "data": undefined,
+      "rowIndex": 20,
+      "virtualizedColumnIndex": 3,
+      "virtualizedRowIndex": 2,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 18,
+      "data": undefined,
+      "rowIndex": 21,
+      "virtualizedColumnIndex": 0,
+      "virtualizedRowIndex": 3,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 19,
+      "data": undefined,
+      "rowIndex": 21,
+      "virtualizedColumnIndex": 1,
+      "virtualizedRowIndex": 3,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 20,
+      "data": undefined,
+      "rowIndex": 21,
+      "virtualizedColumnIndex": 2,
+      "virtualizedRowIndex": 3,
+    },
+  ],
+  Array [
+    Object {
+      "columnIndex": 21,
+      "data": undefined,
+      "rowIndex": 21,
+      "virtualizedColumnIndex": 3,
+      "virtualizedRowIndex": 3,
+    },
+  ],
+]
+`;
+
 exports[`FixedSizeGrid onScroll scrolling should report partial items correctly in onItemsRendered 1`] = `
 Array [
   Array [

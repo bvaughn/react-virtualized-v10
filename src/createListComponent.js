@@ -66,7 +66,7 @@ export type Props<T> = {|
   innerTagName?: string, // deprecated
   itemCount: number,
   itemData: T,
-  itemKey?: (index: number, data: T) => any,
+  itemKey?: (index: number, data: T, virtualizedIndex: number) => any,
   itemSize: itemSize,
   layout: Layout,
   onItemsRendered?: onItemsRenderedCallback,
@@ -122,7 +122,7 @@ type ValidateProps = (props: Props<any>) => void;
 
 const IS_SCROLLING_DEBOUNCE_INTERVAL = 150;
 
-const defaultItemKey = (index: number, data: any) => index;
+const defaultItemKey = (index: number, data: any, _: number) => index;
 
 // In DEV mode, this Set helps us only log a warning once per component instance.
 // This avoids spamming the console every time a render happens.
@@ -324,7 +324,7 @@ export default function createListComponent({
           items.push(
             createElement(children, {
               data: itemData,
-              key: itemKey(index, itemData),
+              key: itemKey(index, itemData, index - startIndex),
               index,
               isScrolling: useIsScrolling ? isScrolling : undefined,
               style: this._getItemStyle(index),
