@@ -432,14 +432,14 @@ const VariableSizeGrid = createGridComponent({
     };
 
     instance.resetAfterColumnIndex = (
-      columnIndex: number,
+      columnIndex?: number,
       shouldForceUpdate?: boolean = true
     ) => {
       instance.resetAfterIndices({ columnIndex, shouldForceUpdate });
     };
 
     instance.resetAfterRowIndex = (
-      rowIndex: number,
+      rowIndex?: number,
       shouldForceUpdate?: boolean = true
     ) => {
       instance.resetAfterIndices({ rowIndex, shouldForceUpdate });
@@ -452,7 +452,7 @@ const VariableSizeGrid = createGridComponent({
     }: {
       columnIndex?: number,
       rowIndex?: number,
-      shouldForceUpdate: boolean,
+      shouldForceUpdate?: boolean,
     }) => {
       if (typeof columnIndex === 'number') {
         instanceProps.lastMeasuredColumnIndex = Math.min(

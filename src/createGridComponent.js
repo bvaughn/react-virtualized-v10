@@ -238,8 +238,8 @@ export default function createGridComponent({
       scrollLeft,
       scrollTop,
     }: {
-      scrollLeft: number,
-      scrollTop: number,
+      scrollLeft?: number,
+      scrollTop?: number,
     }): void {
       if (scrollLeft !== undefined) {
         scrollLeft = Math.max(0, scrollLeft);
@@ -280,7 +280,7 @@ export default function createGridComponent({
       columnIndex,
       rowIndex,
     }: {
-      align: ScrollToAlign,
+      align?: ScrollToAlign,
       columnIndex?: number,
       rowIndex?: number,
     }): void {
