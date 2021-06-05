@@ -92,6 +92,6 @@ const METHODS = [
       </Fragment>
     ),
     signature:
-      'resetAfterIndex(index: number, shouldForceUpdate: boolean = true): void',
+      'resetAfterIndex(index: number, shouldForceUpdate?: boolean = true): void',
   },
 ];
