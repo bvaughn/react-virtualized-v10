@@ -166,9 +166,9 @@ Array [
   Array [
     Object {
       "overscanStartIndex": 0,
-      "overscanStopIndex": 6,
+      "overscanStopIndex": 5,
       "visibleStartIndex": 0,
-      "visibleStopIndex": 4,
+      "visibleStopIndex": 3,
     },
   ],
 ]
@@ -203,9 +203,9 @@ Array [
   Array [
     Object {
       "overscanStartIndex": 0,
-      "overscanStopIndex": 6,
+      "overscanStopIndex": 5,
       "visibleStartIndex": 0,
-      "visibleStopIndex": 4,
+      "visibleStopIndex": 3,
     },
   ],
   Array [
@@ -285,9 +285,9 @@ Array [
   Array [
     Object {
       "overscanStartIndex": 0,
-      "overscanStopIndex": 6,
+      "overscanStopIndex": 5,
       "visibleStartIndex": 0,
-      "visibleStopIndex": 4,
+      "visibleStopIndex": 3,
     },
   ],
 ]

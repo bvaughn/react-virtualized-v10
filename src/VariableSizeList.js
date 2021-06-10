@@ -222,7 +222,18 @@ const VariableSizeList = createListComponent({
       case 'end':
         return minOffset;
       case 'center':
-        return Math.round(minOffset + (maxOffset - minOffset) / 2);
+        const itemMidPoint =
+          itemMetadata.offset + Math.ceil(itemMetadata.size / 2);
+        if (itemMetadata.offset < Math.floor(size / 2)) {
+          // The row is above the midpoint of the first full window so centering
+          // it is best achieved by scrolling to the top
+          return 0;
+        } else if (itemMidPoint > estimatedTotalSize - Math.ceil(size / 2)) {
+          // The row is below the midpoint of the last full window
+          return Math.max(0, estimatedTotalSize - size);
+        } else {
+          return Math.round(minOffset + (maxOffset - minOffset) / 2);
+        }
       case 'auto':
       default:
         if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
