@@ -27,19 +27,16 @@ const FixedSizeList = createListComponent({
       0,
       itemCount * ((itemSize: any): number) - size
     );
-    const maxOffset = Math.min(
-      lastItemOffset,
-      index * ((itemSize: any): number)
-    );
-    const minOffset = Math.max(
-      0,
-      index * ((itemSize: any): number) - size + ((itemSize: any): number)
-    );
+    const maxOffset = index * ((itemSize: any): number);
+    const boundedMaxOffset = Math.min(lastItemOffset, maxOffset);
+    const minOffset =
+      index * ((itemSize: any): number) - size + ((itemSize: any): number);
+    const boundedMinOffset = Math.max(0, minOffset);
 
     if (align === 'smart') {
       if (
-        scrollOffset >= minOffset - size &&
-        scrollOffset <= maxOffset + size
+        scrollOffset >= boundedMinOffset - size &&
+        scrollOffset <= boundedMaxOffset + size
       ) {
         align = 'auto';
       } else {
@@ -49,31 +46,26 @@ const FixedSizeList = createListComponent({
 
     switch (align) {
       case 'start':
-        return maxOffset;
+        return boundedMaxOffset;
       case 'end':
-        return minOffset;
+        return boundedMinOffset;
       case 'center': {
-        // "Centered" offset is usually the average of the min and max.
-        // But near the edges of the list, this doesn't hold true.
         const middleOffset = Math.round(
           minOffset + (maxOffset - minOffset) / 2
         );
-        if (middleOffset < Math.ceil(size / 2)) {
-          return 0; // near the beginning
-        } else if (middleOffset > lastItemOffset + Math.floor(size / 2)) {
-          return lastItemOffset; // near the end
-        } else {
-          return middleOffset;
-        }
+        return Math.max(0, Math.min(lastItemOffset, middleOffset));
       }
       case 'auto':
       default:
-        if (scrollOffset >= minOffset && scrollOffset <= maxOffset) {
+        if (
+          scrollOffset >= boundedMinOffset &&
+          scrollOffset <= boundedMaxOffset
+        ) {
           return scrollOffset;
-        } else if (scrollOffset < minOffset) {
-          return minOffset;
+        } else if (scrollOffset < boundedMinOffset) {
+          return boundedMinOffset;
         } else {
-          return maxOffset;
+          return boundedMaxOffset;
         }
     }
   },
